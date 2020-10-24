@@ -1,0 +1,77 @@
+//此题创建map容器比较麻烦，也费算法不推荐，java中map比较好用
+class Solution {
+public:
+    int doWork(char ch,int ps,map<int,map<char,int>> status)
+    {
+        //cout<<ch<<endl;
+        char p;
+        if(ch >= '0' && ch <= '9') p = 'n';
+        else if(ch == '+' || ch == '-') p = 's';       
+        else if(ch == 'e' || ch == 'E') p = 'e';
+        else if(ch == ' ' ) p = 'b';
+        else if(ch == '.' ) p = 'd';
+        else p = '?';
+        if(status[ps].find(p) == status[ps].end()) 
+            return -1;
+        ps = (int)status[ps][p];
+        return ps;
+    }
+    bool isNumber(string s) {
+        map<int,map<char,int>> status;
+        map<char,int> star0;
+        star0.insert(pair<char,int>('b',0));
+        star0.insert(pair<char,int>('s',1));
+        star0.insert(pair<char,int>('n',2));
+        star0.insert(pair<char,int>('d',4));
+        map<char,int> star1;
+        star1.insert(pair<char,int>('n',2));
+        star1.insert(pair<char,int>('d',4));
+        map<char,int> star2;
+        star2.insert(pair<char,int>('n',2));
+        star2.insert(pair<char,int>('e',5));
+        star2.insert(pair<char,int>('b',8));
+        star2.insert(pair<char,int>('d',3));
+        map<char,int> star3;
+        star3.insert(pair<char,int>('n',3));
+        star3.insert(pair<char,int>('e',5));
+        star3.insert(pair<char,int>('b',8));
+        map<char,int> star4;
+        star4.insert(pair<char,int>('n',3));
+        map<char,int> star5;
+        star5.insert(pair<char,int>('n',7));
+        star5.insert(pair<char,int>('s',6));
+        map<char,int> star6;
+        star6.insert(pair<char,int>('n',7));
+        map<char,int> star7;
+        star7.insert(pair<char,int>('n',7));
+        star7.insert(pair<char,int>('b',8));
+        map<char,int> star8;
+        star8.insert(pair<char,int>('b',8));
+
+        status.insert(pair<int,map<char,int>>(0,star0));
+        status.insert(pair<int,map<char,int>>(1,star1));
+        status.insert(pair<int,map<char,int>>(2,star2));
+        status.insert(pair<int,map<char,int>>(3,star3));
+        status.insert(pair<int,map<char,int>>(4,star4));
+        status.insert(pair<int,map<char,int>>(5,star5));
+        status.insert(pair<int,map<char,int>>(6,star6));
+        status.insert(pair<int,map<char,int>>(7,star7));
+        status.insert(pair<int,map<char,int>>(8,star8));
+
+        int ps = 0;
+        char ch;
+        for(int i=0;i<s.size();i++)
+        {
+            ch = s[i];
+            ps = doWork(ch,ps,status);
+            if(ps == -1)
+            {
+                return false;
+            }
+        }
+        if(  ps == 2 || ps == 3 || ps == 7 || ps == 8)
+            return true;
+        else
+            return false;
+    }
+};
